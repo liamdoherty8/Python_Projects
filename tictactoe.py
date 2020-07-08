@@ -18,7 +18,7 @@ def initialize_game():
 def draw_board(game_state):
 	board = f"   |   |   \n {game_state[0][0]} | {game_state[0][1]} | {game_state[0][2]}\n   |   |    \n-----------\n" \
 	f"   |   |   \n {game_state[1][0]} | {game_state[1][1]} | {game_state[1][2]}\n   |   |    \n-----------\n" \
-	f"   |   |   \n   |   |   \n {game_state[2][0]} | {game_state[2][1]} | {game_state[2][2]}\n"
+	f"   |   |   \n {game_state[2][0]} | {game_state[2][1]} | {game_state[2][2]}\n   |   |   \n"
 	print(board)
 
 def player_selection(game_state, players):
@@ -69,7 +69,23 @@ def run_game(game_state, players):
 		players = players[::-1]
 		if is_gameover(game_state) == True:
 			print("Game over!")
-			break
+			play_again = None
+			while play_again == None:
+				play_again = input("Would you like to play again? Y for yes or N for no: ")
+				if play_again.upper() == 'Y':
+					exit = False
+					game_state, players = initialize_game()
+					run_game(game_state, players)
+				elif play_again.upper() == 'N':
+					print("Exiting...")
+					exit = True
+					break
+				else:
+					exit = False
+					print("Invalid selection! Please try again.")
+					play_again = None
+			if exit:
+				break
 
 
 if __name__ == "__main__":
